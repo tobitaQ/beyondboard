@@ -1,0 +1,51 @@
+id,source,faces,boxes
+00,16--Award_Ceremony/16_Award_Ceremony_Awards_Ceremony_16_124.jpg,1,292 26 101 157
+01,41--Swimming/41_Swimming_Swimming_41_26.jpg,1,179 294 54 44
+02,59--people--driving--car/59_peopledrivingcar_peopledrivingcar_59_906.jpg,1,245 121 85 114
+03,55--Sports_Coach_Trainer/55_Sports_Coach_Trainer_sportcoaching_55_721.jpg,1,246 89 159 206
+04,53--Raid/53_Raid_policeraid_53_597.jpg,1,299 87 89 113
+05,13--Interview/13_Interview_Interview_On_Location_13_246.jpg,1,231 98 164 227
+06,25--Soldier_Patrol/25_Soldier_Patrol_Soldier_Patrol_25_936.jpg,1,135 67 34 43
+07,13--Interview/13_Interview_Interview_Sequences_13_937.jpg,1,224 96 174 253
+08,61--Street_Battle/61_Street_Battle_streetfight_61_350.jpg,2,431 67 55 73;430 216 59 34
+09,55--Sports_Coach_Trainer/55_Sports_Coach_Trainer_sportcoaching_55_188.jpg,2,139 88 62 88;336 129 51 86
+10,58--Hockey/58_Hockey_icehockey_puck_58_715.jpg,2,394 169 90 112;166 115 99 125
+11,49--Greeting/49_Greeting_peoplegreeting_49_564.jpg,2,426 260 88 106;209 26 126 182
+12,3--Riot/3_Riot_Riot_3_666.jpg,2,326 134 98 126;196 114 92 131
+13,19--Couple/19_Couple_Couple_19_50.jpg,2,368 118 44 59;419 174 46 68
+14,6--Funeral/6_Funeral_Funeral_6_537.jpg,2,200 103 81 98;346 153 77 127
+15,13--Interview/13_Interview_Interview_2_People_Visible_13_327.jpg,2,225 121 105 167;366 88 98 163
+16,30--Surgeons/30_Surgeons_Surgeons_30_264.jpg,3,223 20 45 73;311 77 38 57;388 37 41 62
+17,31--Waiter_Waitress/31_Waiter_Waitress_Waiter_Waitress_31_214.jpg,3,141 23 60 80;227 44 62 70;484 30 65 89
+18,45--Balloonist/45_Balloonist_Balloonist_45_225.jpg,3,275 89 62 141;340 124 101 135;29 15 88 95
+19,61--Street_Battle/61_Street_Battle_streetfight_61_815.jpg,3,207 142 45 41;250 198 75 62;497 169 39 39
+20,7--Cheering/7_Cheering_Cheering_7_373.jpg,3,185 302 39 75;285 272 42 62;406 268 42 57
+21,0--Parade/0_Parade_Parade_0_429.jpg,3,96 164 66 76;244 139 72 90;381 144 59 82
+22,54--Rescue/54_Rescue_rescuepeople_54_8.jpg,3,102 138 89 88;276 146 84 91;328 73 74 94
+23,31--Waiter_Waitress/31_Waiter_Waitress_Waiter_Waitress_31_685.jpg,3,326 29 38 51;468 27 39 52;150 23 37 49
+24,3--Riot/3_Riot_Riot_3_993.jpg,4,182 30 63 85;339 17 55 82;346 206 61 89;164 213 67 101
+25,24--Soldier_Firing/24_Soldier_Firing_Soldier_Firing_24_703.jpg,4,148 34 41 55;215 37 45 55;300 7 46 50;396 26 42 48
+26,15--Stock_Market/15_Stock_Market_Stock_Market_15_241.jpg,4,86 242 36 52;220 254 34 46;351 264 39 50;436 230 34 59
+27,35--Basketball/35_Basketball_basketballgame_ball_35_309.jpg,4,248 51 51 69;134 11 52 36;85 26 42 72;479 33 112 161
+28,1--Handshaking/1_Handshaking_Handshaking_1_733.jpg,4,481 101 86 122;301 146 34 65;202 135 49 91;120 34 71 176
+29,1--Handshaking/1_Handshaking_Handshaking_1_411.jpg,4,14 123 70 94;162 88 96 108;419 124 50 124;539 155 81 149
+30,56--Voter/56_Voter_peoplevoting_56_717.jpg,4,259 4 68 66;354 39 49 66;520 4 62 69;165 1 44 61
+31,55--Sports_Coach_Trainer/55_Sports_Coach_Trainer_sportcoaching_55_764.jpg,4,74 163 45 60;212 169 44 62;346 155 41 60;481 117 49 61
+32,0--Parade/0_Parade_Parade_0_364.jpg,5,129 108 89 112;224 93 58 86;354 111 56 71;409 101 46 56;500 135 38 54
+33,20--Family_Group/20_Family_Group_Family_Group_20_843.jpg,5,194 112 61 86;322 56 55 87;272 257 59 83;401 229 66 83;343 369 51 64
+34,7--Cheering/7_Cheering_Cheering_7_125.jpg,5,135 60 56 84;201 114 54 75;284 88 44 70;334 123 44 65;391 96 42 75
+35,12--Group/12_Group_Large_Group_12_Group_Large_Group_12_448.jpg,5,186 120 162 152;89 289 165 146;369 94 118 149;314 280 121 169;455 195 131 145
+36,29--Students_Schoolkids/29_Students_Schoolkids_Students_Schoolkids_29_222.jpg,5,26 46 66 125;165 118 65 94;332 198 32 39;410 152 45 74;458 147 49 104
+37,0--Parade/0_Parade_Parade_0_616.jpg,5,87 95 41 62;169 69 49 66;296 25 49 66;410 80 41 56;467 66 54 64
+38,49--Greeting/49_Greeting_peoplegreeting_49_162.jpg,5,148 71 41 82;181 126 46 62;302 136 45 52;421 102 44 58;504 99 44 70
+39,12--Group/12_Group_Large_Group_12_Group_Large_Group_12_557.jpg,5,78 150 65 86;179 167 70 80;304 83 60 78;399 143 71 82;521 124 66 79
+40,coco/val2017/000000453860.jpg,0,
+41,coco/val2017/000000514979.jpg,0,
+42,coco/val2017/000000571893.jpg,0,
+43,coco/val2017/000000234807.jpg,0,
+44,coco/val2017/000000353096.jpg,0,
+45,coco/val2017/000000233033.jpg,0,
+46,coco/val2017/000000223789.jpg,0,
+47,coco/val2017/000000475904.jpg,0,
+48,coco/val2017/000000295797.jpg,0,
+49,coco/val2017/000000020107.jpg,0,

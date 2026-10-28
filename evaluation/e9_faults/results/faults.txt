@@ -1,0 +1,14 @@
+id|fault|result|code|message|ms
+F1|call before begin()|fail|1|Call aws.begin() first.|0
+F2|Wi-Fi name not found|fail|2|Wi-Fi "no-such-wifi-cloudpower" was not found. ESP32 can only use 2.4 GHz Wi-Fi: if your router has two names (for example ...-G-... and ...-A-...), use the 2.4 GHz one.|20153
+F3|wrong Wi-Fi password|fail|2|Could not connect to Wi-Fi "<your Wi-Fi>". Check the password.|20117
+F0|correct settings|ok|0||2726
+F4|invalid name|fail|12|"bad name!" cannot be used as a name. Use letters, digits and . _ - / (up to 128).|0
+F5|function does not exist|fail|5|There is no function "noSuchFunction". Put noSuchFunction.py in backend/functions/ and deploy.|48
+F6|exception in the user's function|fail|9|An error occurred in "testFail": the sensor value is missing|608
+F7|function exceeds its time limit|fail|8|"testSleep" did not finish within 2 s.|2247
+F8|photo over 1 MB|fail|6|The data is too large (limit 1MB).|0
+F9|text line saved to a photo|fail|7|"e9/photo.jpg" holds an image or other data, so lines cannot be added.|98
+F10|Wi-Fi dropped before a call|ok|0||4103
+F10b|lines saved after reconnect|1
+F11|token revoked|fail|4|This device is not registered. Check that aws_config.h is up to date.|38

@@ -1,0 +1,4 @@
+arm,mae,mae_ci,signed_error,exact,exact_faces,false_alarm_no_face,precision,recall,f1,time_median_ms,time_p95_ms,part1_median_ms,part2_median_ms
+on-device,1.38,0.98-1.78,-1.38,21/50,11/40,0/10,1.0,0.425,0.596,267.0,482,195.5,80.5
+cloud,0.14,0.04-0.26,-0.06,44/50,34/40,0/10,0.983,0.958,0.97,922.0,1125,305.0,618.0
+# Wilcoxon |count error| W=0.0 p=3.016e-06; McNemar exact p=2.384e-07 (b=0, c=23)

@@ -1,0 +1,6 @@
+app,raw_sketch,raw_secrets_h,raw_cloud_code,ac_sketch,ac_generated_files,ac_cloud_code,ours_sketch,ours_cloud_code
+app1_save,50,21,0,21,16,0,20,0
+app2_load,69,21,9,17,17,0,17,0
+app3_run,73,21,7,60,17,9,22,6
+app4_ask,70,21,14,76,17,0,21,0
+app5_classify,73,21,30,91,19,0,25,0

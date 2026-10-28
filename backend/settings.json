@@ -1,0 +1,34 @@
+{
+  "region": "ap-northeast-1",
+  "devices": [
+    "device-1"
+  ],
+  "ask": {
+    "model": "jp.anthropic.claude-haiku-4-5-20251001-v1:0",
+    "dailyLimitPerDevice": 200,
+    "maxChars": 1000
+  },
+  "prices": {
+    "asOf": "2026-10-12",
+    "currency": "USD",
+    "askInputPerMillionTokens": 1.1,
+    "askOutputPerMillionTokens": 5.5,
+    "note": "Claude Haiku 4.5 on Bedrock、ap-northeast-1 の日本の推論プロファイル（Regional）。AWS の価格表 API（2026-10-12 版）。Global は 1.0 と 5.0。実際の料金は AWS の料金ページで確認すること"
+  },
+  "functions": {
+    "dailySummary": {
+      "readSavedData": true,
+      "models": [
+        "jp.amazon.nova-2-lite-v1:0"
+      ]
+    },
+    "countFaces": {
+      "readSavedData": true,
+      "rekognition": true
+    },
+    "faceBoxes": {
+      "readSavedData": true,
+      "rekognition": true
+    }
+  }
+}

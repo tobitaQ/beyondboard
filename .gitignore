@@ -1,0 +1,8 @@
+.DS_Store
+__pycache__/
+
+# Device token and Wi-Fi password, if copied into a sketch folder
+aws_config.h
+
+# arduino-cli libraries and downloads
+.arduino/

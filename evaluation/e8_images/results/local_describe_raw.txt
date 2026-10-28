@@ -1,0 +1,35 @@
+Listening on /dev/cu.usbmodemXXXX (115200 bps). Lines from the board are shown below.
+ESP-ROM:esp32s3-20210327
+Build:Mar 27 2021
+rst:0x1 (POWERON),boot:0x9 (SPI_FAST_FLASH_BOOT)
+SPIWP:0xee
+mode:DIO, clock div:1
+load:0x3fce2820,len:0x116c
+load:0x403c8700,len:0xc2c
+load:0x403cb700,len:0x3108
+entry 0x403c88b8
+  -> ping: ok
+BEGIN
+id,ask_ms,answer
+  -> ask: ok
+00,10710,"A man in a suit is holding a plaque."
+  -> ask: ok
+01,6530,"swimmers in a pool."
+  -> ask: ok
+02,5922,"A child is sitting in a vehicle and holding the steering wheel."
+  -> ask: ok
+03,6324,"A woman is smiling in front of a green background."
+  -> ask: ok
+04,6116,"A woman in a red sari holding flowers."
+[CloudPower] Warning: local.ask() was called 6 times in 35 s (about 10 per minute). The AI on your computer may become slow. If you do not need it this often, add a delay() in loop().
+  -> ask: ok
+05,5894,"A man with a black jacket and a black necklace."
+  -> ask: ok
+06,7110,"A man in a border patrol uniform stands next to a tripod."
+  -> ask: ok
+07,5793,"A man is smiling in a black shirt."
+  -> ask: ok
+08,7327,"A wrestler in a yellow and red uniform is pinning another wrestler."
+  -> ask: ok
+09,7235,"A man and woman are sitting in a gym."
+END

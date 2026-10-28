@@ -1,0 +1,387 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>BeyondBoard Reproduction Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Condensed:wght@500;600&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a lab manual. Sticky contents rail on the left (wide screens), one reading column,
+   numbered steps because the order matters, "expected result" panels that quote the paper. */
+:root {
+  --bg: #f6f7f5;          /* paper with a faint green-grey bias */
+  --surface: #ffffff;
+  --fg: #1c2622;          /* ink */
+  --muted: #5b6a64;
+  --rule: #d9dfdb;
+  --accent: #1f6f55;      /* solder-mask green */
+  --accent-soft: #e3efe9;
+  --warn: #8a5a00;
+  --warn-soft: #fbf1dc;
+  --code-bg: #eef1ef;
+  --font-display: "IBM Plex Sans Condensed", "Arial Narrow", system-ui, sans-serif;
+  --font-body: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --step-0: 1rem;
+  --step-1: 1.2rem;
+  --step-2: 1.5rem;
+  --step-3: 2.1rem;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #121816; --surface: #19211e; --fg: #e3ebe7; --muted: #9aaaa3; --rule: #2c3833;
+    --accent: #6cc7a2; --accent-soft: #1d3029; --warn: #e9b65a; --warn-soft: #2e2617; --code-bg: #1f2925;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #121816; --surface: #19211e; --fg: #e3ebe7; --muted: #9aaaa3; --rule: #2c3833;
+  --accent: #6cc7a2; --accent-soft: #1d3029; --warn: #e9b65a; --warn-soft: #2e2617; --code-bg: #1f2925;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+body {
+  margin: 0; background: var(--bg); color: var(--fg);
+  font: 400 var(--step-0)/1.6 var(--font-body);
+  padding-inline: 16px;
+}
+.page {
+  max-width: 1120px; margin: 0 auto; padding-block: 40px 80px;
+  display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 48px;
+}
+@media (max-width: 860px) { .page { grid-template-columns: minmax(0, 1fr); gap: 24px; padding-block: 24px 56px; } }
+
+nav.toc { position: sticky; top: calc(env(safe-area-inset-top, 0px) + 24px); align-self: start; font-size: 0.9rem; }
+nav.toc p { font: 600 0.75rem/1 var(--font-display); letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin: 0 0 10px; }
+nav.toc ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; counter-reset: toc; }
+nav.toc li { counter-increment: toc; }
+nav.toc a { color: var(--fg); text-decoration: none; display: grid; grid-template-columns: 2ch 1fr; gap: 8px; padding: 2px 0; }
+nav.toc a::before { content: counter(toc); color: var(--accent); font-family: var(--font-mono); font-size: 0.85em; }
+nav.toc a:hover, nav.toc a:focus-visible { color: var(--accent); }
+@media (max-width: 860px) {
+  nav.toc { position: static; border: 1px solid var(--rule); background: var(--surface); padding: 14px 16px; border-radius: 6px; }
+  nav.toc ol { grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); }
+}
+
+main { min-width: 0; }
+header.masthead { border-bottom: 2px solid var(--fg); padding-bottom: 20px; margin-bottom: 8px; }
+.eyebrow { font: 600 0.78rem/1.2 var(--font-display); letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); margin: 0 0 8px; }
+h1 { font: 600 var(--step-3)/1.15 var(--font-display); margin: 0 0 12px; text-wrap: balance; letter-spacing: -0.01em; }
+.lede { max-width: 65ch; margin: 0; color: var(--muted); }
+.meta { display: flex; flex-wrap: wrap; gap: 6px 18px; margin-top: 14px; font: 400 0.85rem/1.4 var(--font-mono); color: var(--muted); }
+
+section { padding-top: 36px; }
+h2 { font: 600 var(--step-2)/1.2 var(--font-display); margin: 0 0 6px; text-wrap: balance; display: flex; gap: 12px; align-items: baseline; }
+h2 .num { font: 500 0.95rem/1 var(--font-mono); color: var(--accent); }
+h3 { font: 600 var(--step-1)/1.3 var(--font-display); margin: 28px 0 6px; text-wrap: balance; }
+p, li { max-width: 68ch; }
+p { margin: 10px 0; }
+a { color: var(--accent); }
+a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+code { font: 400 0.88em/1 var(--font-mono); background: var(--code-bg); padding: 0.1em 0.35em; border-radius: 3px; }
+
+.steps { list-style: none; padding: 0; margin: 14px 0; counter-reset: s; display: grid; gap: 14px; }
+.steps > li { counter-increment: s; display: grid; grid-template-columns: 2.2rem minmax(0, 1fr); gap: 0 10px; max-width: none; }
+.steps > li::before { content: counter(s); font: 500 0.85rem/1.6rem var(--font-mono); color: var(--accent); border: 1px solid var(--accent); border-radius: 50%; width: 1.6rem; height: 1.6rem; text-align: center; margin-top: 0.1rem; }
+.steps > li > * { grid-column: 2; min-width: 0; }
+.steps > li > p:first-child { margin-top: 0; }
+
+.code { position: relative; margin: 10px 0; }
+.code pre { margin: 0; background: var(--code-bg); border: 1px solid var(--rule); border-radius: 6px; padding: 12px 64px 12px 14px; overflow-x: auto; font: 400 0.85rem/1.55 var(--font-mono); }
+.code pre .c { color: var(--muted); }
+.code button {
+  position: absolute; top: 6px; right: 6px; font: 500 0.72rem/1 var(--font-body); color: var(--muted);
+  background: var(--surface); border: 1px solid var(--rule); border-radius: 4px; padding: 5px 8px; cursor: pointer;
+}
+.code button:hover { color: var(--accent); border-color: var(--accent); }
+
+.expect { border-left: 3px solid var(--accent); background: var(--accent-soft); padding: 10px 14px; margin: 14px 0; border-radius: 0 6px 6px 0; }
+.expect > b { font: 600 0.75rem/1 var(--font-display); letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); display: block; margin-bottom: 6px; }
+.expect p { margin: 4px 0; }
+.caution { border-left: 3px solid var(--warn); background: var(--warn-soft); padding: 10px 14px; margin: 14px 0; border-radius: 0 6px 6px 0; }
+.caution > b { font: 600 0.75rem/1 var(--font-display); letter-spacing: 0.08em; text-transform: uppercase; color: var(--warn); display: block; margin-bottom: 6px; }
+
+.table { overflow-x: auto; margin: 12px 0; border: 1px solid var(--rule); border-radius: 6px; background: var(--surface); }
+table { border-collapse: collapse; width: 100%; font-size: 0.9rem; font-variant-numeric: tabular-nums; }
+th, td { text-align: left; padding: 7px 10px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+th { font: 600 0.78rem/1.3 var(--font-display); letter-spacing: 0.04em; text-transform: uppercase; color: var(--muted); background: var(--code-bg); }
+tr:last-child td { border-bottom: 0; }
+td.n { text-align: right; white-space: nowrap; }
+td code { white-space: nowrap; }
+
+.eval { border-top: 1px solid var(--rule); padding-top: 4px; }
+.tag { font: 500 0.75rem/1 var(--font-mono); color: var(--accent); border: 1px solid var(--accent); border-radius: 3px; padding: 2px 6px; margin-left: 4px; white-space: nowrap; }
+footer { margin-top: 56px; padding-top: 16px; border-top: 1px solid var(--rule); color: var(--muted); font-size: 0.85rem; }
+</style>
+</head>
+<body>
+<div class="page">
+<nav class="toc" aria-label="Contents">
+  <p>Contents</p>
+  <ol>
+    <li><a href="#prepare">What you need</a></li>
+    <li><a href="#local">Run with local</a></li>
+    <li><a href="#aws">Run with aws</a></li>
+    <li><a href="#examples">Examples 01–07</a></li>
+    <li><a href="#evaluation">Reproduce the evaluation</a></li>
+    <li><a href="#trouble">When something fails</a></li>
+    <li><a href="#cleanup">Clean up and cost</a></li>
+  </ol>
+</nav>
+
+<main>
+<header class="masthead">
+  <p class="eyebrow">Artifact guide · IEEE Access submission</p>
+  <h1>BeyondBoard Reproduction Guide</h1>
+  <p class="lede">How to install BeyondBoard, run the same sketch on your own computer and in your own AWS account, and repeat every measurement in the paper “BeyondBoard: Cloud Storage, Computing, and Generative AI as One-Line Arduino Calls”. Each evaluation lists the command, the time it takes, and the numbers you should see.</p>
+  <div class="meta"><span>Measured 2026-10-01 to 10-02</span><span>AWS ap-northeast-1 (Tokyo)</span><span>License: MIT</span></div>
+</header>
+
+<section id="prepare">
+  <h2><span class="num">1</span>What you need</h2>
+  <p>Everything below was used for the paper. Newer versions will most likely work, but the numbers in Section 5 were measured with these.</p>
+  <div class="table"><table>
+    <thead><tr><th>Item</th><th>Used in the paper</th><th>Needed for</th></tr></thead>
+    <tbody>
+      <tr><td>ESP32 board</td><td>ESP32 Dev Module (ESP32, 240 MHz, 520 KB SRAM)</td><td>Examples 01–06, latency, faults</td></tr>
+      <tr><td>Camera board</td><td>Freenove ESP32-S3-WROOM CAM (8 MB PSRAM, 16 MB flash)</td><td>Example 07, image tasks (E8), faults (E9)</td></tr>
+      <tr><td>Arduino IDE / CLI</td><td>Arduino CLI 1.3.1 (bundled with the IDE)</td><td>Everything on the board</td></tr>
+      <tr><td>ESP32 core</td><td>arduino-esp32 3.3.5; 2.0.14 only for the on-device face detector in E8</td><td>Everything on the board</td></tr>
+      <tr><td>Python</td><td>3.12 locally (Lambda runs 3.13); <code>pyserial</code>, and <code>scipy</code> for E8</td><td>Local adapter, scripts</td></tr>
+      <tr><td>Node.js and AWS CLI</td><td>Node.js 22, AWS CDK 2.272</td><td>The <code>aws</code> destination</td></tr>
+      <tr><td>Ollama</td><td>0.35 with <code>qwen2.5:3b</code> and <code>qwen2.5vl:3b</code></td><td><code>ask</code> on <code>local</code></td></tr>
+      <tr><td>AWS account</td><td>Bedrock: Claude Haiku 4.5 (Japan inference profile); Rekognition</td><td>The <code>aws</code> destination</td></tr>
+      <tr><td>Wi-Fi</td><td>2.4 GHz (channel 11, shared with neighbors)</td><td>Everything on <code>aws</code></td></tr>
+    </tbody>
+  </table></div>
+  <p>Get the code and install the library by copying it into your Arduino libraries folder (from the Library Manager once it is published):</p>
+  <div class="code"><pre>git clone https://github.com/tobitaQ/beyondboard.git
+cd beyondboard
+cp -r arduino/BeyondBoard ~/Documents/Arduino/libraries/   <span class="c"># then restart the Arduino IDE</span></pre></div>
+</section>
+
+<section id="local">
+  <h2><span class="num">2</span>Run with <code>local</code></h2>
+  <p><code>local</code> needs no account and no internet. A Python program on your computer talks to the board over USB, keeps data in SQLite, runs the same function files, and asks Ollama.</p>
+  <ol class="steps">
+    <li><p>Prepare the local adapter once.</p>
+      <div class="code"><pre>python3 -m venv local/.venv
+local/.venv/bin/pip install -r local/requirements.txt
+ollama pull qwen2.5:3b &amp;&amp; ollama pull qwen2.5vl:3b   <span class="c"># only for ask</span></pre></div></li>
+    <li><p>Open <b>File › Examples › BeyondBoard › 06_LocalAll</b> in the Arduino IDE and upload it. Close the Serial Monitor: the adapter needs the port.</p></li>
+    <li><p>Start the adapter. It finds the board when only one is connected and shows everything the sketch prints.</p>
+      <div class="code"><pre>local/.venv/bin/python local/cloud_local.py</pre></div></li>
+  </ol>
+  <div class="expect"><b>Expected</b><p>The sketch's lines appear in the adapter's output: a saved value, the function's answer, and the AI's answer. <code>python3 local/cloud_local.py stats</code> shows how often each call ran.</p></div>
+</section>
+
+<section id="aws">
+  <h2><span class="num">3</span>Run with <code>aws</code></h2>
+  <p>The backend is built in your own AWS account with one command. Preparation is needed once per computer.</p>
+  <ol class="steps">
+    <li><p>Install Node.js and the AWS CLI. Create an access key for your IAM user in the AWS console and enter it.</p>
+      <div class="code"><pre>aws configure                 <span class="c"># region: ap-northeast-1 (or edit backend/settings.json)</span></pre></div></li>
+    <li><p>Install the backend's packages and bootstrap the CDK (once per account and region).</p>
+      <div class="code"><pre>cd backend
+npm install
+npx cdk bootstrap</pre></div></li>
+    <li><p>Build the backend. This creates the Lambda function URL, the DynamoDB table, the S3 bucket, one Lambda per user function, and a token per device listed in <code>settings.json</code>.</p>
+      <div class="code"><pre>npm run deploy                <span class="c"># 1–2 minutes after changes; seconds when nothing changed</span></pre></div></li>
+    <li><p>Open <code>backend/out/device-1/aws_config.h</code>, write your Wi-Fi name and password (the 2.4 GHz network), and copy the file into the sketch folder of the example you want to run.</p></li>
+    <li><p>If the AWS console asks for it, submit the one-time use-case form for Anthropic models on Amazon Bedrock.</p></li>
+  </ol>
+  <div class="caution"><b>Keep this file private</b><p><code>aws_config.h</code> holds the device's token and your Wi-Fi password. It is ignored by Git. If it leaks, run <code>npm run revoke -- device-1</code> to stop the token, or <code>npm run rotate -- device-1</code> to make a new one.</p></div>
+  <p>Check the backend from the computer, exactly as a device would call it:</p>
+  <div class="code"><pre>npm run call -- save temp.csv 23.5
+npm run call -- load temp.csv
+npm run call -- run detectAnomaly 38.2
+npm run call -- ask "Is this hot?" 38.2</pre></div>
+</section>
+
+<section id="examples">
+  <h2><span class="num">4</span>Examples 01–07</h2>
+  <p>Board settings: ESP32 Dev Module with upload speed 115200. For the ESP32-S3 camera board: PSRAM “OPI PSRAM”, flash 16 MB, partition “16M Flash (3MB APP/9.9MB FATFS)”. From the command line:</p>
+  <div class="code"><pre>CLI="/Applications/Arduino IDE.app/Contents/Resources/app/lib/backend/resources/arduino-cli"
+"$CLI" compile --fqbn esp32:esp32:esp32:UploadSpeed=115200 --library arduino/BeyondBoard --upload --port &lt;PORT&gt; &lt;SKETCH_DIR&gt;
+"$CLI" compile --fqbn esp32:esp32:esp32s3:PSRAM=opi,FlashSize=16M,PartitionScheme=app3M_fat9M_16MB --library arduino/BeyondBoard --upload --port &lt;PORT&gt; &lt;SKETCH_DIR&gt;</pre></div>
+  <div class="table"><table>
+    <thead><tr><th>Example</th><th>What it shows</th><th>Paper</th></tr></thead>
+    <tbody>
+      <tr><td><code>01_SaveSensor</code></td><td>Saves a temperature every 10 s as a line <code>time,value</code></td><td>App 1</td></tr>
+      <tr><td><code>02_LoadConfig</code></td><td>Reads a file placed in <code>backend/files/</code> (deploy after adding it)</td><td>App 2</td></tr>
+      <tr><td><code>03_RunFunction</code></td><td>Runs <code>backend/functions/detectAnomaly.py</code>; try it first with <code>npm run try -- detectAnomaly 38.2</code></td><td>App 3</td></tr>
+      <tr><td><code>04_AskExplain</code></td><td>Asks the AI to explain a reading</td><td>App 4, Fig. 5</td></tr>
+      <tr><td><code>05_AskClassify</code></td><td>Lets the AI choose a label from given choices and saves it</td><td>App 5</td></tr>
+      <tr><td><code>06_LocalAll</code></td><td>The same calls on <code>local</code></td><td>Section 2 above</td></tr>
+      <tr><td><code>07_CameraFaces</code></td><td>Photo → <code>save</code> → <code>run("countFaces")</code> (Rekognition) → <code>ask</code> about the photo</td><td>Fig. 1, case study</td></tr>
+    </tbody>
+  </table></div>
+  <div class="expect"><b>Expected for 07</b><p>Once a minute: <code>faces: N</code> and <code>AI: &lt;one sentence&gt;</code>. Saving a photo took 172–221 ms and counting faces 494–784 ms of server time in the paper's case study.</p></div>
+</section>
+
+<section id="evaluation">
+  <h2><span class="num">5</span>Reproduce the evaluation</h2>
+  <p>Each block names the paper's table, the command, and what you should get. Scripts that only read committed result files run in seconds; experiments on the board take minutes.</p>
+
+  <div class="eval">
+  <h3>Code size and complexity <span class="tag">Table 7</span></h3>
+  <p>Computed from the sketches and cloud code in <code>evaluation/baselines/</code> and <code>arduino/BeyondBoard/examples/</code>; no judgment involved.</p>
+  <div class="code"><pre>python3 tools/code_metrics.py          <span class="c"># writes evaluation/e7_code_metrics.csv</span>
+python3 tools/loc.py                   <span class="c"># library 527, camera 104, core 226, adapters 170 / 152</span></pre></div>
+  <div class="expect"><b>Expected</b><p>Platform API names over apps 1–5: AWS direct 33, Arduino Cloud 21, BeyondBoard 7. Adding AI to app 1: 67, 74, and 15 changed lines.</p></div>
+  </div>
+
+  <div class="eval">
+  <h3>Steps, concepts, and the second rater <span class="tag">Tables 8, 9, 11</span></h3>
+  <p>Rater 1's counts are in the paper's tables; rater 2's step lists are in <code>evaluation/second_rater/e1_rater2.md</code> (a blind AI rater given <code>e1_rules.md</code>).</p>
+  <div class="code"><pre>python3 tools/step_agreement.py</pre></div>
+  <div class="expect"><b>Expected</b><p>Spearman's ρ 0.81 (steps per application), 0.78 (web-console steps, including setup), 0.69 (totals including one-time setup).</p></div>
+  </div>
+
+  <div class="eval">
+  <h3>Image tasks: on the board vs. through BeyondBoard <span class="tag">Table 12</span></h3>
+  <p>The protocol in <code>evaluation/e8_images/PROTOCOL.md</code> was fixed before any detector ran. The images are not in the repository (WIDER FACE is CC BY-NC-ND 4.0); the scripts rebuild the same 50.</p>
+  <ol class="steps">
+    <li><p>Download the WIDER FACE validation set and annotations from the official release (<code>CUHK-CSE/wider_face</code> on Hugging Face: <code>WIDER_val.zip</code>, <code>wider_face_split.zip</code>) and the COCO 2017 annotations (<code>annotations_trainval2017.zip</code>). Unpack them.</p></li>
+    <li><p>Select and encode the images, then embed them in a header.</p>
+      <div class="code"><pre>cd evaluation/e8_images
+python3 select_images.py WIDER_DIR OUT --coco COCO_DIR/annotations/instances_val2017.json
+python3 make_header.py OUT/images OUT/images.h   <span class="c"># copy images.h into each sketch folder</span></pre></div>
+      <p><code>OUT/selection.csv</code> must match the committed <code>selection.csv</code>.</p></li>
+    <li><p>On-device arm: install arduino-esp32 2.0.14 into a separate folder (3.x no longer ships esp-dl), upload <code>OnDeviceFaces</code> to the ESP32-S3, and record three passes.</p>
+      <div class="code"><pre>export ARDUINO_DIRECTORIES_DATA=$HOME/esp32-2.0.14 ARDUINO_BOARD_MANAGER_ADDITIONAL_URLS=https://espressif.github.io/arduino-esp32/package_esp32_index.json
+"$CLI" core update-index &amp;&amp; "$CLI" core install esp32:esp32@2.0.14
+"$CLI" compile --fqbn esp32:esp32:esp32s3:PSRAM=opi,FlashSize=16M,PartitionScheme=app3M_fat9M_16MB --upload --port &lt;PORT&gt; OnDeviceFaces
+unset ARDUINO_DIRECTORIES_DATA
+../../local/.venv/bin/python capture.py &lt;PORT&gt; results/ondevice 3</pre></div></li>
+    <li><p>Cloud arm: <code>faceBoxes</code> must be in <code>backend/settings.json</code> and deployed. Copy <code>aws_config.h</code> into <code>CloudFaces</code>, upload with core 3.3.5, and record three passes (about 2 minutes each; about USD 0.40 of Rekognition in total).</p>
+      <div class="code"><pre>../../local/.venv/bin/python capture.py &lt;PORT&gt; results/cloud 3 1200</pre></div></li>
+    <li><p>Optional: upload <code>LocalDescribe</code>, start Ollama, and run <code>local/cloud_local.py</code> to describe the same ten images offline.</p></li>
+    <li><p>Score both arms.</p>
+      <div class="code"><pre>python3 analyze.py                      <span class="c"># needs scipy</span></pre></div></li>
+  </ol>
+  <div class="expect"><b>Expected</b>
+    <div class="table"><table>
+      <thead><tr><th></th><th>On the board (esp-dl)</th><th>BeyondBoard (Rekognition)</th></tr></thead>
+      <tbody>
+        <tr><td>Count error, MAE</td><td class="n">1.38</td><td class="n">0.14</td></tr>
+        <tr><td>Exact count, 40 images with faces</td><td class="n">11</td><td class="n">34</td></tr>
+        <tr><td>Recall at IoU ≥ 0.5</td><td class="n">0.43</td><td class="n">0.96</td></tr>
+        <tr><td>Time per image, median</td><td class="n">267 ms</td><td class="n">922 ms</td></tr>
+        <tr><td>Flash added (excluding images)</td><td class="n">734 KB</td><td class="n">734 KB</td></tr>
+      </tbody>
+    </table></div>
+    <p>Rekognition and Bedrock change over time; small differences in the cloud arm are expected. The on-device arm is deterministic.</p>
+  </div>
+  </div>
+
+  <div class="eval">
+  <h3>Errors under injected faults <span class="tag">Table 13</span></h3>
+  <p>The sketch <code>evaluation/e9_faults/FaultTable</code> causes eleven faults on the ESP32-S3. The <code>testFail</code> function must be deployed.</p>
+  <div class="code"><pre>cd evaluation/e9_faults
+../../local/.venv/bin/python run_faults.py &lt;PORT&gt; device-1 results/faults.txt
+cd ../../backend &amp;&amp; npm run rotate -- device-1   <span class="c"># the run revokes the token; make a new one</span></pre></div>
+  <div class="caution"><b>This run revokes your device token</b><p>At “WAITING” the script runs <code>npm run revoke</code> to test the AUTH error. Afterwards, run <code>npm run rotate</code> and copy the new <code>aws_config.h</code> into your sketches. Your Wi-Fi name is masked in the saved results.</p></div>
+  <div class="expect"><b>Expected</b><p>Ten faults produce a sentence that names the cause; the Wi-Fi drop reconnects and saves exactly one line.</p></div>
+  </div>
+
+  <div class="eval">
+  <h3>Latency and concurrency <span class="tag">Tables 14, 15</span></h3>
+  <p>Upload <code>benchmarks/LatencyBench</code> (with <code>aws_config.h</code>; set <code>USE_LOCAL 1</code> for local), save its CSV output under <code>benchmarks/results/</code>, then summarize. Concurrency runs from the computer.</p>
+  <div class="code"><pre>python3 benchmarks/concurrency.py aws
+local/.venv/bin/python local/cloud_local.py --no-serial --http 8787   <span class="c"># prints a token; or set CLOUD_LOCAL_TOKEN</span>
+python3 benchmarks/concurrency.py local http://localhost:8787 &lt;TOKEN&gt;
+python3 benchmarks/summarize.py           <span class="c"># p95 = 29th of 30 sorted values</span></pre></div>
+  <div class="expect"><b>Expected (medians)</b><p><code>aws</code>: save 67, load 107, run 207, ask with choices 618 ms. <code>local</code>: 25, 28, 42, 121 ms. Wi-Fi congestion moves the p95 of <code>aws</code> save the most.</p></div>
+  </div>
+
+  <div class="eval">
+  <h3>Flash and RAM <span class="tag">Table 16</span></h3>
+  <div class="code"><pre>bash benchmarks/sizes.sh                  <span class="c"># compile only; uses a placeholder aws_config.h</span></pre></div>
+  <div class="expect"><b>Expected</b><p>The library adds 9.2–10.4 KB of flash on five ESP32 chips and 9.6 KB on an Arduino UNO (<code>local</code>). With a real <code>aws_config.h</code>, the ESP32 <code>aws</code> build was 1.8 KB larger.</p></div>
+  </div>
+
+  <div class="eval">
+  <h3>Service changes and agreement <span class="tag">Tables 18, 19</span></h3>
+  <p>Judgments: <code>evaluation/second_rater/e3_rater1.csv</code> (rater 1) and <code>evaluation/second_rater/e3_rater2.csv</code> (blind rater, rules in <code>e3_rules.md</code>).</p>
+  <div class="code"><pre>python3 tools/agreement.py evaluation/second_rater/e3_rater1.csv evaluation/second_rater/e3_rater2.csv</pre></div>
+  <div class="expect"><b>Expected</b><p>Full codes: κ 0.73, 0.80, 0.53. The paper also reports agreement on “sketch rewrite or not” (κ 0.89, 0.85, and undefined for BeyondBoard because both raters judged no change a sketch rewrite; <code>python3 tools/agreement.py --binary</code>) and adopts the second rater's judgment for changes #4 and #35.</p></div>
+  </div>
+
+  <div class="eval">
+  <h3>Conformance <span class="tag">Section VII-G</span></h3>
+  <div class="code"><pre>python3 tests/conformance.py aws
+python3 tests/conformance.py local http://localhost:8787 &lt;TOKEN&gt;</pre></div>
+  <div class="expect"><b>Expected</b><p>22 of 22 checks pass on both destinations.</p></div>
+  </div>
+
+  <div class="eval">
+  <h3>Scope of published projects <span class="tag">Section VII-I</span></h3>
+  <p>The 30 Arduino Project Hub projects, their interactions, and the class of each are in <code>evaluation/e6_coverage.csv</code>. The site's ranking changes daily, so a new query may return different projects.</p>
+  </div>
+</section>
+
+<section id="trouble">
+  <h2><span class="num">6</span>When something fails</h2>
+  <div class="table"><table>
+    <thead><tr><th>Symptom</th><th>Cause and fix</th></tr></thead>
+    <tbody>
+      <tr><td>Wi-Fi “… was not found”</td><td>ESP32 only uses 2.4 GHz. If the router shows two names (…-G-… and …-A-…), use the 2.4 GHz one.</td></tr>
+      <tr><td>Upload fails on the ESP32</td><td>Set the upload speed to 115200; 921600 failed with our board.</td></tr>
+      <tr><td>Camera does not start</td><td>Enable PSRAM (OPI on ESP32-S3) and check the board name in <code>camera.begin()</code>.</td></tr>
+      <tr><td>“This device is not registered”</td><td>The token was revoked or <code>aws_config.h</code> is old. Run <code>npm run rotate -- device-1</code> and copy the new file.</td></tr>
+      <tr><td>“Today's limit of 200 questions …”</td><td>The daily AI limit per device. It resets at 09:00 JST; change <code>dailyLimitPerDevice</code> in <code>settings.json</code> and redeploy to raise it.</td></tr>
+      <tr><td><code>ask</code> fails on <code>local</code></td><td>Ollama is not running. Start it with <code>ollama serve</code> or <code>brew services start ollama</code>.</td></tr>
+      <tr><td>The local adapter cannot open the port</td><td>Close the Serial Monitor; only one program can use the port.</td></tr>
+      <tr><td>Bedrock refuses the model</td><td>Submit the one-time use-case form for Anthropic models in the AWS console.</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section id="cleanup">
+  <h2><span class="num">7</span>Clean up and cost</h2>
+  <p>A deployed backend that is not called costs almost nothing. An AI question cost about USD 0.00017 in our evaluation (Claude Haiku 4.5 at USD 1.10 and 5.50 per million input and output tokens, Japan inference profile in Tokyo, 2026-10-12); counting faces costs USD 1.30 per 1,000 images in Tokyo. <code>npm run stats</code> shows calls, time, and the estimated cost.</p>
+  <div class="code"><pre>cd backend
+npm run stats
+npm run destroy        <span class="c"># removes everything from your account, data included</span></pre></div>
+</section>
+
+<footer>
+  <p>BeyondBoard is MIT licensed. Some evaluation files are in Japanese.</p>
+</footer>
+</main>
+</div>
+<script>
+// A copy button for every code block. Comments (gray) are left out of the copied text.
+document.querySelectorAll('.code').forEach(function (block) {
+  var button = document.createElement('button');
+  button.type = 'button';
+  button.textContent = 'Copy';
+  button.addEventListener('click', function () {
+    var pre = block.querySelector('pre').cloneNode(true);
+    pre.querySelectorAll('.c').forEach(function (c) { c.remove(); });
+    var text = pre.textContent.replace(/[ \t]+$/gm, '');
+    var done = function () { button.textContent = 'Copied'; setTimeout(function () { button.textContent = 'Copy'; }, 1500); };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(done, function () { selectText(block); });
+    } else {
+      selectText(block);
+    }
+  });
+  block.appendChild(button);
+});
+function selectText(block) {
+  var range = document.createRange();
+  range.selectNodeContents(block.querySelector('pre'));
+  var sel = window.getSelection();
+  sel.removeAllRanges();
+  sel.addRange(range);
+}
+</script>
+</body>
+</html>

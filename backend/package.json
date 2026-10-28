@@ -1,0 +1,28 @@
+{
+  "name": "aws-cloud-backend",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Backend for the AwsCloud Arduino library (save / load / run / ask)",
+  "scripts": {
+    "build": "tsc --noEmit",
+    "synth": "cdk synth",
+    "deploy": "node scripts/deploy.mjs",
+    "destroy": "cdk destroy --force",
+    "try": "node scripts/try.mjs",
+    "call": "node scripts/call.mjs",
+    "stats": "node scripts/stats.mjs",
+    "revoke": "node scripts/revoke.mjs",
+    "rotate": "node scripts/revoke.mjs --rotate"
+  },
+  "dependencies": {
+    "@aws-sdk/client-dynamodb": "^3.600.0",
+    "aws-cdk-lib": "^2.200.0",
+    "constructs": "^10.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "aws-cdk": "^2.1000.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.6.0"
+  }
+}
